@@ -6,6 +6,6 @@ namespace Finances.Domain.DTOs
 {
     public class IncomeRequest
     {
-        public decimal Salary { get; set; }
+        public decimal Value { get; set; }
     }
 }
