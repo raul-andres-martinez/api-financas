@@ -10,6 +10,6 @@ namespace Finances.Domain.Interfaces.Services
     public interface IIncomeService
     {
         Task AddAsync(IncomeRequest request);
-        Task UpdateIncomeValueAsync();
+        Task UpdateIncomeValueAsync(int id);
     }
 }

@@ -24,10 +24,10 @@ namespace Finances.Data.Repositories
             _context.Set<TEntity>().Remove(entity);
         }
 
-        public void Insert(TEntity entity)
+        public async Task InsertAsync(TEntity entity)
         {
-            _context.Set<TEntity>().Add(entity);
-            _context.SaveChanges();
+            await _context.Set<TEntity>().AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TEntity>> SelectAsync(Expression<Func<TEntity, bool>> where)

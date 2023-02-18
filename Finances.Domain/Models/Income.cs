@@ -22,6 +22,18 @@ namespace Finances.Domain.Models
             Debits = new List<Debits>();
         }
 
+        public void SetHasDebit()
+        {
+            if ((double)Value > 1903.98)
+            {
+                HasDebit = true;
+            }
+            else
+            {
+                HasDebit = false;
+            }
+        }
+
         public void CalculateDebitsTotal()
         {
             if (HasDebit)
@@ -34,20 +46,40 @@ namespace Finances.Domain.Models
             }
         }
 
-        public void SetHasDebit()
+        public void UpdateValue(DateTime currentDate)
         {
-            if ((double)Value > 1903.98)
+            if (PaymentDay.Day == currentDate.Day)
             {
-                HasDebit = true;
+                DisponibleAmount += Value;
             }
-            else
+        }
+
+        public DateTime GetPaymentDay(int day)
+        {
+            var currentDate = DateTime.Now;
+            var paymentDay = new DateTime(currentDate.Year, currentDate.Month, day);
+            if (paymentDay < currentDate)
             {
-                HasDebit = false;
+                paymentDay = paymentDay.AddMonths(1);
             }
+            return paymentDay;
+        }
+
+        public DateTime GetNextPaymentDate(int paymentDay)
+        {
+            var now = DateTime.Now;
+            var nextPaymentDate = new DateTime(now.Year, now.Month, paymentDay);
+
+            if (nextPaymentDate < now)
+            {
+                nextPaymentDate = nextPaymentDate.AddMonths(1);
+            }
+
+            return nextPaymentDate;
         }
     }
 
-    public class Debits
+    public class Debits : BaseEntity
     {
         public string Name { get; set; }
         public double DebitValue { get; set; }

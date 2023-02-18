@@ -15,6 +15,7 @@ namespace Finances.Service.Extensions
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IIncomeService, IncomeService>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

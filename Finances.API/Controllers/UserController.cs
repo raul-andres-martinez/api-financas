@@ -13,10 +13,12 @@ namespace Finances.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IIncomeService _incomeService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IIncomeService incomeService)
         {
             _userService = userService;
+            _incomeService = incomeService;
         }
 
         ///<summary>
@@ -26,14 +28,14 @@ namespace Finances.API.Controllers
         ///<response code="201">Cdastrado com sucesso</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Post([FromBody][Required]UserRequest request)
+        public async Task<IActionResult> Post([FromBody][Required]UserAndIncomeRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _userService.AddAsync(request);
+            await _userService.AddAsync(request.UserRequest, request.IncomeRequest);
             return StatusCode(StatusCodes.Status201Created);
         }
 

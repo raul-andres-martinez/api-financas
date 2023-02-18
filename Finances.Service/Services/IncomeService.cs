@@ -28,13 +28,34 @@ namespace Finances.Service.Services
             _ = request ?? throw new ArgumentNullException(nameof(request));
 
             var newIncome = _mapper.Map<Income>(request);
+            newIncome.CreatedAt = DateTime.Now;
 
-            _incomeRepository.Insert(newIncome);
+            newIncome.SetHasDebit();
+            newIncome.CalculateDebitsTotal();
+            newIncome.GetPaymentDay(request.PaymentDay);
+
+            await _incomeRepository.InsertAsync(newIncome);
         }
 
-        public Task UpdateIncomeValueAsync()
+        public async Task UpdateIncomeValueAsync(int id)
         {
             throw new NotImplementedException();
         }
     }
 }
+//var paymentDay = request.PaymentDay;
+//var currentMonth = DateTime.Now.Month;
+//var currentYear = DateTime.Now.Year;
+
+//if (paymentDay < DateTime.Now.Day)
+//{
+//    currentMonth++;
+
+//    if (currentMonth > 12)
+//    {
+//        currentMonth = 1;
+//        currentYear++;
+//    }
+//}
+
+//newIncome.PaymentDay = new DateTime(currentYear, currentMonth, paymentDay);

@@ -9,7 +9,7 @@ namespace Finances.Domain.Interfaces.Repositories
 {
     public interface IBaseRepository<TEntity> where TEntity : BaseEntity
     {
-        void Insert(TEntity entity);
+        Task InsertAsync(TEntity entity);
         void Update (TEntity entity);
         void Delete(TEntity entity);
         Task<IEnumerable<TEntity>> SelectAsync(Expression<Func<TEntity, bool>>where);

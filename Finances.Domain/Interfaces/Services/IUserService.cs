@@ -7,7 +7,7 @@ namespace Finances.Domain.Interfaces.Services
 {
     public interface IUserService
     {
-        Task AddAsync(UserRequest request);
+        Task AddAsync(UserRequest userRequest, IncomeRequest incomeRequest);
         //Task<bool> DeleteAsync(int id);
         Task<IEnumerable<User>> GetAsync();
         Task<User> GetByIdAsync(int id);
